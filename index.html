@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body ng-controller="HomeController" ng-init="init()">
+      <div class="table-container">
+        <label class="form-group">Search name: <input ng-model="searchText.name" /></label>
+        <p class="cls-total">Total currancy: {{ getTotal(result) }}</p>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>
+                <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                Name
+                  <span ng-show="sortType == 'name' && !sortReverse">&#8595;</span>
+                  <span ng-show="sortType == 'name' && sortReverse">&#8593;</span>
+                </a>
+              </td>
+              <td>
+                <a href="#" ng-click="sortType = 'location'; sortReverse = !sortReverse">
+                Location
+                  <span ng-show="sortType == 'location' && !sortReverse">&#8595;</span>
+                  <span ng-show="sortType == 'location' && sortReverse">&#8593;</span>
+                </a>
+              </td>
+              <td>
+                <a href="#" ng-click="sortType = 'currency'; sortReverse = !sortReverse">
+                Currency
+                  <span ng-show="sortType == 'currency' && !sortReverse">&#8595;</span>
+                  <span ng-show="sortType == 'currency' && sortReverse">&#8593;</span>
+                </a>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="product in products | orderBy:sortType:sortReverse | filter:searchText as result">
+              <td inline-edit="product.name">{{ product.name }}</td>
+              <td inline-edit="product.location">{{ product.location }}</td>
+              <td inline-edit="product.currency" on-save="updateTodo(product.currency)">{{ product.currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+      <script src="app/app.js"></script>
+      <script src="app/services/data.service.js"></script>
+      <script src="app/directives/edit.directive.js"></script>
+      <script src="app/controllers/home.controller.js"></script>
+  </body>
+</html>
